@@ -13,6 +13,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
   // Shop
   let shopSection = document.querySelector("#shop");
+  let names = document.querySelectorAll(".name");
+  let costs = document.querySelectorAll(".cost");
+  let gains = document.querySelectorAll(".gain");
   /////////////////////////////////////////
 
   /////////////////////////////////////////
@@ -39,40 +42,65 @@ window.addEventListener("DOMContentLoaded", function () {
     // récupération du score non passif en transformant en int et en arrondissant à l'entier
     let int = parseInt(localStorage.getItem("score"));
     score.innerHTML = Math.round(int);
-    // récupération du score passif en transformant en int et en arrondissant au chiffre après la virgule
-    idle.innerHTML = Math.round(parseInt(localStorage.getItem("idle")));
+    // récupération du score passif en transformant en int et en arrondissant à 2 chiffres après la virgule
+    // gain.toFixed(2)
+    let temp = parseFloat(localStorage.getItem("idle"));
+
+    idle.innerHTML = temp.toFixed(2);
   }
 
   // Fonction de stockage du shop en local storage (en json)
   function saveShop() {
-    localStorage.setItem("shop", JSON.stringify(shopSection));
+    let items = {};
+
+    //boucle permettant de sauvegarder chaque item (avec pour clés "name", "prix", "gain") et de les mettres dans items
+    for (let i = 0; i < names.length; i++) {
+      let name = names[i].textContent;
+      let cost = costs[i].textContent;
+      let gain = gains[i].textContent;
+
+      let item = {};
+      item.name = name;
+      item.prix = cost;
+      item.gain = gain;
+
+      items[i] = item;
+    }
+    localStorage.setItem("shop", JSON.stringify(items));
   }
 
   // Fonction de chargement du shop en local storage (en json)
   function loadShop() {
-    shopSection = JSON.parse(localStorage.getItem("shop"));
+    let shopItems = document.querySelectorAll(".shopItem");
+    shopItems = JSON.parse(localStorage.getItem("shop"));
+    // boucle permettant de charger chaque item
+    for (let i = 0; i < names.length; i++) {
+      names[i].textContent = shopItems[i].name;
+      costs[i].textContent = shopItems[i].prix;
+      gains[i].textContent = shopItems[i].gain;
+    }
   }
 
   // Fonction d'achat d'un item
-  function buyItem(score, btn) {
+  function buyItem(btn) {
     // récupération de l'item
     let item = btn.parentNode;
     // récupération du prix de l'item
     let price = item.querySelector(".cost").innerHTML;
     // vérification du score
-    if (score >= price) {
+    if (score.textContent >= price) {
       // décrémentation du score
-      score -= price;
+      score.textContent -= price;
       // récupération du gain de score passif
       let gain = item.querySelector(".gain").innerHTML;
       // incrémentation du score passif
-      idle.innerHTML = parseInt(idle.innerHTML) + parseInt(gain);
+      idle.innerHTML = parseInt(idle.innerHTML) + parseFloat(gain);
       // incrémentation du prix de l'item
       price = parseInt(price) * 1.15;
       item.querySelector(".cost").innerHTML = Math.round(price);
       // incrémentation du gain de score passif
-      gain = parseInt(gain) * 1.15;
-      item.querySelector(".gain").innerHTML = Math.round(gain);
+      gain = parseFloat(gain) * 1.15;
+      item.querySelector(".gain").innerHTML = gain.toFixed(2);
 
       // sauvegarde du score et du shop
       saveScore();
@@ -111,7 +139,7 @@ window.addEventListener("DOMContentLoaded", function () {
   // click sur un item du shop, lancement de la fonction si le target possède la classe "buy"
   shopSection.addEventListener("click", function (e) {
     if (e.target.classList.contains("buy")) {
-      buyItem(score.innerHTML, e.target);
+      buyItem(e.target);
     }
   });
   /////////////////////////////////////////

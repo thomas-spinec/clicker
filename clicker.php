@@ -39,37 +39,37 @@
         </section>
         <section id="shop">
             <section class="shopItem">
-                <h2>Mineur (pioche)</h2>
+                <h2 class="name">Mineur (pioche)</h2>
                 <p>Coût : <span class="cost">10</span></p>
                 <p>Gain : <span class="gain">1</span>/s</p>
                 <button class="buy">Acheter</button>
             </section>
             <section class="shopItem">
-                <h2>Mineur (marteau-piqueur)</h2>
+                <h2 class="name">Mineur (marteau-piqueur)</h2>
                 <p>Coût : <span class="cost">100</span></p>
                 <p>Gain : <span class="gain">5</span>/s</p>
                 <button class="buy">Acheter</button>
             </section>
             <section class="shopItem">
-                <h2>Mineur (foreuse individuelle)</h2>
+                <h2 class="name">Mineur (foreuse individuelle)</h2>
                 <p>Coût : <span class="cost">1000</span></p>
                 <p>Gain : <span class="gain">10</span>/s</p>
                 <button class="buy">Acheter</button>
             </section>
             <section class="shopItem">
-                <h2>Foreuse (trépan en fer)</h2>
+                <h2 class="name">Foreuse (trépan en fer)</h2>
                 <p>Coût : <span class="cost">10000</span></p>
                 <p>Gain : <span class="gain">50</span>/s</p>
                 <button class="buy">Acheter</button>
             </section>
             <section class="shopItem">
-                <h2>Foreuse (trépan fibre de carbonne)</h2>
+                <h2 class="name">Foreuse (trépan fibre de carbonne)</h2>
                 <p>Coût : <span class="cost">100000</span></p>
                 <p>Gain : <span class="gain">100</span>/s</p>
                 <button class="buy">Acheter</button>
             </section>
             <section class="shopItem">
-                <h2>Foreuse (trépan en diamant)</h2>
+                <h2 class="name">Foreuse (trépan en diamant)</h2>
                 <p>Coût : <span class="cost">1000000</span></p>
                 <p>Gain : <span class="gain">500</span>/s</p>
                 <button class="buy">Acheter</button>
