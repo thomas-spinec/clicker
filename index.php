@@ -20,9 +20,9 @@
     // instance
     session_start();
     $user = new User();
-    // if connected go to todolist.php
+    // if connected go to clicker.php
     if ($user->isConnected()) {
-        header('Location: todolist.php');
+        header('Location: clicker.php');
     }
     require_once 'includes/header.php';
     ?>

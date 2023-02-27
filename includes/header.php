@@ -30,7 +30,7 @@ $user = new User();
             } else {
             ?>
                 <div id='center'>
-                    <h3>Bienvenue space clicker</h3>
+                    <h3>Bienvenue sur space clicker</h3>
                 </div>
             <?php
             }
