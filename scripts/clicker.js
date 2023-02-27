@@ -87,19 +87,24 @@ window.addEventListener("DOMContentLoaded", function () {
     let item = btn.parentNode;
     // récupération du prix de l'item
     let price = item.querySelector(".cost").innerHTML;
+    // transformation du prix en int
+    price = parseInt(price);
+    // transformation du score en int
+    let coin = parseInt(score.textContent);
     // vérification du score
-    if (score.textContent >= price) {
+    if (coin >= price) {
       // décrémentation du score
       score.textContent -= price;
       // récupération du gain de score passif
       let gain = item.querySelector(".gain").innerHTML;
       // incrémentation du score passif
-      idle.innerHTML = parseInt(idle.innerHTML) + parseFloat(gain);
+      gain = parseFloat(gain);
+      idle.innerHTML = parseInt(idle.innerHTML) + parseFloat(gain.toFixed(2));
       // incrémentation du prix de l'item
       price = parseInt(price) * 1.15;
       item.querySelector(".cost").innerHTML = Math.round(price);
       // incrémentation du gain de score passif
-      gain = parseFloat(gain) * 1.15;
+      gain = gain * 1.15;
       item.querySelector(".gain").innerHTML = gain.toFixed(2);
 
       // sauvegarde du score et du shop
@@ -135,7 +140,12 @@ window.addEventListener("DOMContentLoaded", function () {
   // click sur le clicker
   clicker.addEventListener("click", function (e) {
     incrementScore();
+    clicker.classList.toggle("anim");
+    setTimeout(function () {
+      clicker.classList.toggle("anim");
+    }, 100);
   });
+
   // click sur un item du shop, lancement de la fonction si le target possède la classe "buy"
   shopSection.addEventListener("click", function (e) {
     if (e.target.classList.contains("buy")) {

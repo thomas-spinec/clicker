@@ -60,7 +60,6 @@ p {
   text-align: center;
   width: 90%;
   margin: auto;
-  /* margin-bottom: 2%; */
 }
 
 /* media pour la taille de la police */
@@ -199,7 +198,7 @@ main button {
   border: 1px solid #c2c2c2c6;
   border-radius: 15px;
   color: #333;
-  font-size: 20px;
+  font-size: 1em;
   /* font-weight: bold; */
   padding: 10px;
   margin-bottom: 5px;
@@ -343,137 +342,84 @@ form input[type="submit"]:hover {
 }
 
 /* *****************
-    ToDoList
+    clicker
 ****************** */
 
-#hidden {
-  display: none;
+#pageClicker {
+  background-image: url("img/espace.jpg");
+  background-size: cover;
 }
 
-#droit {
-  display: block;
-  margin-bottom: 1%;
-  background-color: #5b5b5b;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#droit > section {
-  /* height: 100%; */
+#score {
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  align-content: center;
-  gap: 2%;
+  font-size: 2em;
 }
 
-#droit .background_form {
-  margin: 0;
-  padding: 0;
-}
-
-#droit section {
-  flex-basis: 30%;
-  padding-left: 2px;
-  padding-right: 2px;
-}
-
-#usersRights {
-  text-align: left;
-}
-
-#formUsersTasks > select {
-  font-size: 1em;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #7d7d7d;
-  border-radius: 5px;
-}
-
-#addTask {
-  /* height: 15vh; */
-  width: 60%;
+#clicker {
+  width: 30vw;
   margin: auto;
 }
 
-#addTask h2 {
-  margin-top: 0.5%;
-  margin-bottom: 2%;
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.toggle {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
+@keyframes click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#clicker {
+  animation: rotation 10s linear infinite;
 }
 
-.toggle input {
+/* lancer l'animation au moment du click sur le bouton */
+#clickerButton.anim {
+  animation: click 0.1s;
+}
+
+#pageClicker main #clicker button {
+  background-color: transparent !important;
+  border: transparent !important;
+  padding: 10px;
+  margin-bottom: 5px;
+  margin-right: 10px;
   margin-left: 10px;
+  transition: 0.5s;
   cursor: pointer;
+  width: 100%;
 }
 
-#todolist form {
+#clicker img {
+  width: 100%;
+}
+
+#shop {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: stretch;
+  align-content: center;
+  margin-top: 1%;
+  margin-bottom: 3%;
 }
 
-#lists {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  align-items: start;
-  gap: 2%;
-}
-
-#lists > * {
-  flex-basis: 40%;
-}
-
-#toDo,
-#done {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 2%;
-}
-
-#toDo > *,
-#done > * {
-  flex: 1 1 300px;
-}
-
-.section_Task {
-  background-color: #b1b1b1;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #7d7d7d;
-  margin-bottom: 10px;
-  padding: 5px;
-}
-
-.fa-check {
-  color: green;
-  cursor: pointer;
-}
-
-.fa-xmark {
-  color: red;
-  cursor: pointer;
-}
-
-/* Media pour les lists */
-@media screen and (max-width: 800px) {
-  #lists {
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #lists > * {
-    flex-basis: 100%;
-  }
+#shop section {
+  flex-basis: 30%;
+  background-color: #33333365;
+  margin: 2px;
 }

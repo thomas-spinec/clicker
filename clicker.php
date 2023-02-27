@@ -8,10 +8,11 @@
     <title>Clicker</title>
     <link rel="stylesheet" href="site.css">
     <link rel="icon" type="images/png" sizes="64x64" href="img/Logo_onglet.png" />
+    <script src="scripts/jquery-3.6.3.min.js"></script>
     <script src="scripts/clicker.js"></script>
 </head>
 
-<body>
+<body id="pageClicker">
 
     <!-- Header -->
     <?php
@@ -30,49 +31,51 @@
 
     <!-- Main -->
     <main>
-        <section id="score">
-            <p>Fragments : <span id="scoreValue">0</span></p>
-            <p>Mineurs: <span id="scoreIdle">0</span>/s</p>
-        </section>
-        <section id="clicker">
-            <button id="clickerButton">Cliquez ici</button>
-        </section>
-        <section id="shop">
-            <section class="shopItem">
-                <h2 class="name">Mineur (pioche)</h2>
-                <p>Coût : <span class="cost">10</span></p>
-                <p>Gain : <span class="gain">1</span>/s</p>
-                <button class="buy">Acheter</button>
+        <section class="centrage">
+            <section id="score">
+                <p>Fragments : <span id="scoreValue">0</span></p>
+                <p>Mineurs: <span id="scoreIdle">0</span>/s</p>
             </section>
-            <section class="shopItem">
-                <h2 class="name">Mineur (marteau-piqueur)</h2>
-                <p>Coût : <span class="cost">100</span></p>
-                <p>Gain : <span class="gain">5</span>/s</p>
-                <button class="buy">Acheter</button>
+            <section id="clicker">
+                <button id="clickerButton"><img src="img/asteroid.png" alt=""></button>
             </section>
-            <section class="shopItem">
-                <h2 class="name">Mineur (foreuse individuelle)</h2>
-                <p>Coût : <span class="cost">1000</span></p>
-                <p>Gain : <span class="gain">10</span>/s</p>
-                <button class="buy">Acheter</button>
-            </section>
-            <section class="shopItem">
-                <h2 class="name">Foreuse (trépan en fer)</h2>
-                <p>Coût : <span class="cost">10000</span></p>
-                <p>Gain : <span class="gain">50</span>/s</p>
-                <button class="buy">Acheter</button>
-            </section>
-            <section class="shopItem">
-                <h2 class="name">Foreuse (trépan fibre de carbonne)</h2>
-                <p>Coût : <span class="cost">100000</span></p>
-                <p>Gain : <span class="gain">100</span>/s</p>
-                <button class="buy">Acheter</button>
-            </section>
-            <section class="shopItem">
-                <h2 class="name">Foreuse (trépan en diamant)</h2>
-                <p>Coût : <span class="cost">1000000</span></p>
-                <p>Gain : <span class="gain">500</span>/s</p>
-                <button class="buy">Acheter</button>
+            <section id="shop">
+                <section class="shopItem">
+                    <h3 class="name">Mineur (pioche)</h3>
+                    <p>Coût : <span class="cost">10</span></p>
+                    <p>Gain : <span class="gain">1</span>/s</p>
+                    <button class="buy">Acheter</button>
+                </section>
+                <section class="shopItem">
+                    <h3 class="name">Mineur (marteau-piqueur)</h3>
+                    <p>Coût : <span class="cost">100</span></p>
+                    <p>Gain : <span class="gain">3</span>/s</p>
+                    <button class="buy">Acheter</button>
+                </section>
+                <section class="shopItem">
+                    <h3 class="name">Mineur (foreuse individuelle)</h3>
+                    <p>Coût : <span class="cost">1000</span></p>
+                    <p>Gain : <span class="gain">15</span>/s</p>
+                    <button class="buy">Acheter</button>
+                </section>
+                <section class="shopItem">
+                    <h3 class="name">Foreuse (fer)</h3>
+                    <p>Coût : <span class="cost">10000</span></p>
+                    <p>Gain : <span class="gain">50</span>/s</p>
+                    <button class="buy">Acheter</button>
+                </section>
+                <section class="shopItem">
+                    <h3 class="name">Foreuse (carbonne)</h3>
+                    <p>Coût : <span class="cost">100000</span></p>
+                    <p>Gain : <span class="gain">100</span>/s</p>
+                    <button class="buy">Acheter</button>
+                </section>
+                <section class="shopItem">
+                    <h3 class="name">Foreuse (diamant)</h3>
+                    <p>Coût : <span class="cost">1000000</span></p>
+                    <p>Gain : <span class="gain">500</span>/s</p>
+                    <button class="buy">Acheter</button>
+                </section>
             </section>
         </section>
     </main>
