@@ -31,7 +31,7 @@
     <!-- Main -->
     <main>
         <section class="centrage" id="intro">
-            <h1>Bienvenue sur votre clicker préféré!</h1>
+            <h1>Bienvenue sur Space Clicker !</h1>
             <p>Le but du jeu est simple, il suffit de ... cliquer.</p>
             <p>Au début vous devrez cliquer par vous-même, mais vous allez pouvoir grâce à vos clicks, acheter des améliorations qui vous permettront d'obtenir des clicks automatiques par exemple.</p>
             <p>Alors sans plus attendre, inscrivez-vous ou connectez-vous!</p>

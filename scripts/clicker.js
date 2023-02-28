@@ -6,6 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
   let scoreSection = document.querySelector("#score");
   let score = document.querySelector("#scoreValue");
   let idle = document.querySelector("#scoreIdle");
+  let multiplicateur = document.querySelector("#scoreMultiplier");
 
   // Clicker
   let clickerSection = document.querySelector("#clicker");
@@ -16,13 +17,18 @@ window.addEventListener("DOMContentLoaded", function () {
   let names = document.querySelectorAll(".name");
   let costs = document.querySelectorAll(".cost");
   let gains = document.querySelectorAll(".gain");
+
+  // Reset et déconnexion
+  const btnReset = document.querySelector("#reset");
+  const btnDisconnect = document.querySelector("#deco");
   /////////////////////////////////////////
 
   /////////////////////////////////////////
   //   création des fonctions
   // Fonction d'incrémentation du score au click
   function incrementScore() {
-    score.textContent = parseInt(score.textContent) + 1;
+    score.textContent =
+      parseInt(score.textContent) + parseInt(multiplicateur.textContent);
   }
 
   // Fonction d'incrémentation du score passif
@@ -35,6 +41,7 @@ window.addEventListener("DOMContentLoaded", function () {
   function saveScore() {
     localStorage.setItem("score", score.textContent);
     localStorage.setItem("idle", idle.textContent);
+    localStorage.setItem("multiplier", multiplicateur.textContent);
   }
 
   // Fonction de chargement du score (passif et non) en local storage
@@ -47,6 +54,9 @@ window.addEventListener("DOMContentLoaded", function () {
     let temp = parseFloat(localStorage.getItem("idle"));
 
     idle.innerHTML = temp.toFixed(2);
+
+    // récupération du multiplicateur en transformant en int
+    multiplicateur.innerHTML = parseInt(localStorage.getItem("multiplier"));
   }
 
   // Fonction de stockage du shop en local storage (en json)
@@ -71,8 +81,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
   // Fonction de chargement du shop en local storage (en json)
   function loadShop() {
-    let shopItems = document.querySelectorAll(".shopItem");
-    shopItems = JSON.parse(localStorage.getItem("shop"));
+    let shopItems = JSON.parse(localStorage.getItem("shop"));
     // boucle permettant de charger chaque item
     for (let i = 0; i < names.length; i++) {
       names[i].textContent = shopItems[i].name;
@@ -115,10 +124,123 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // fonction d'achat du multiplicateur
+  function buyMultiplier(btn) {
+    // récupération du multiplicateur
+    let multiplier = btn.parentNode;
+    // récupération du prix du multiplicateur
+    let price = multiplier.querySelector(".cost").innerHTML;
+    // transformation du prix en int
+    price = parseInt(price);
+    // transformation du score en int
+    let coin = parseInt(score.textContent);
+    // vérification du score
+    if (coin >= price) {
+      // décrémentation du score
+      score.textContent -= price;
+      // récupération du gain de score passif
+      let gain = multiplier.querySelector(".gain").innerHTML;
+      // incrémentation du multiplicateur
+      gain = parseInt(gain);
+      multiplicateur.innerHTML = gain;
+      // incrémentation du prix du multiplicateur
+      price = parseInt(price) * 2;
+      multiplier.querySelector(".cost").innerHTML = price;
+      // incrémentation du gain de score passif
+      gain = gain + 1;
+      multiplier.querySelector(".gain").innerHTML = gain;
+      // sauvegarde du score et du shop
+      saveScore();
+      saveShop();
+    } else {
+      alert("Pas assez de fragments !");
+    }
+  }
+
+  // Fonction de reset du score
+  function resetScore() {
+    localStorage.clear();
+    score.innerHTML = 0;
+    idle.innerHTML = 0;
+  }
+
+  // Fonction de sauvegarde du score dans la bdd lorsque le bouton de déconexion est cliqué
+  function saveScoreBdd() {
+    let scoreValue = score.textContent;
+    let idleValue = idle.textContent;
+    let multiplierValue = multiplicateur.textContent;
+
+    let data = new FormData();
+    data.append("score", scoreValue);
+    data.append("idle", idleValue);
+    data.append("multiplier", multiplierValue);
+
+    if (localStorage.getItem("shop") !== null) {
+      let shopValue = localStorage.getItem("shop");
+      data.append("shop", shopValue);
+    }
+    data.append("save", "ok");
+    // fetch vers la page compte.php
+    fetch("compte.php", {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => response.text())
+      .then((result) => {
+        // trim
+        result = result.trim();
+        // si le résultat est "ok" alors on supprime le local storage et on redirige vers l'index avec un get "deconnexion=true"
+        if (result == "ok") {
+          localStorage.clear();
+          window.location.href = "index.php?deconnexion=true";
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  // Fonction de chargement du score depuis la bdd
+  function loadScoreBdd() {
+    // fetch vers compte.php en get
+    fetch("compte.php?col=shop")
+      .then((response) => response.json())
+      .then((result) => {
+        // récupération de chaque colonne
+        let scoreValue = result.score;
+        let idleValue = result.idle;
+        let multiplierValue = result.multiplier;
+        let shopValue = result.shop;
+        // mise de ces valeurs dans le local storage si elles sont bien défini
+        if (scoreValue !== null) {
+          if (shopValue !== null) {
+            localStorage.setItem("score", scoreValue);
+            localStorage.setItem("idle", idleValue);
+            localStorage.setItem("multiplier", multiplierValue);
+            localStorage.setItem("shop", shopValue);
+            loadScore();
+            loadShop();
+          } else {
+            localStorage.setItem("score", scoreValue);
+            localStorage.setItem("idle", idleValue);
+            localStorage.setItem("multiplier", multiplierValue);
+            loadScore();
+          }
+          // lancement de la fonction loadScore
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
   /////////////////////////////////////////
 
   /////////////////////////////////////////
   //   Fonctions au démarrage et toutes les secondes
+
+  // chargement de la partie
+  loadScoreBdd();
 
   // chargement du score s'il n'est pas vide
   if (localStorage.getItem("score") !== null) {
@@ -151,6 +273,23 @@ window.addEventListener("DOMContentLoaded", function () {
     if (e.target.classList.contains("buy")) {
       buyItem(e.target);
     }
+    if (e.target.classList.contains("buyMultiplier")) {
+      buyMultiplier(e.target);
+    }
   });
+
+  // click sur le bouton reset
+  btnReset.addEventListener("click", function (e) {
+    resetScore();
+    // rechargement de page pour la boutique
+    location.reload();
+  });
+
+  // click sur le bouton de déconnexion
+  btnDisconnect.addEventListener("click", function (e) {
+    console.log("click");
+    saveScoreBdd();
+  });
+
   /////////////////////////////////////////
 });

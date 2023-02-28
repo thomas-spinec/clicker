@@ -84,6 +84,18 @@ class User
             ':password' => $password,
         ));
 
+        // création de la ligne correspondante dans la table comptes
+        $requete = "INSERT INTO comptes (id_utilisateur) VALUES (:id_utilisateur)";
+
+        // préparation de la requête
+        $insert2 = $this->bdd->prepare($requete);
+
+        // exécution de la requête avec liaison des paramètres
+        $insert2->execute(array(
+            ':id_utilisateur' => $this->bdd->lastInsertId(),
+        ));
+
+
         echo "ok"; // inscription réussie
 
         // fermer la connexion
@@ -189,24 +201,53 @@ class User
         }
     }
 
-    // récupérer tous les users
-    public function getAllUsers()
+    // sauvegarde de la partie
+    public function save($score, $idle, $multiplier, $shop)
     {
-        // requête pour récupérer tous les utilisateurs
-        $requete = "SELECT * FROM utilisateurs";
+        $requete = "UPDATE comptes SET score = :score, idle = :idle, multiplier = :multiplier, shop = :shop WHERE id_utilisateur = :id";
 
         // préparation de la requête
-        $select = $this->bdd->prepare($requete);
+        $update = $this->bdd->prepare($requete);
 
-        // exécution de la requête
-        $select->execute();
+        // htmlspecialchars pour les paramètres
+        $score = htmlspecialchars($score);
+        $idle = htmlspecialchars($idle);
+        $multiplier = htmlspecialchars($multiplier);
+        $shop = htmlspecialchars($shop, ENT_NOQUOTES);
 
-        // récupération du tableau
-        $fetch = $select->fetchAll(PDO::FETCH_ASSOC);
+        // exécution de la requête avec liaison des paramètres
+        $update->execute(array(
+            ':score' => $score,
+            ':idle' => $idle,
+            ':multiplier' => $multiplier,
+            ':shop' => $shop,
+            ':id' => $this->id,
+        ));
 
         // fermer la connexion
         $this->bdd = null;
 
-        return $fetch;
+        echo "ok"; // sauvegarde réussie
+    }
+
+    // récupération de la partie
+    public function load()
+    {
+        // requête
+        $requete = "SELECT * FROM comptes where id_utilisateur = :id";
+
+        // préparation de la requête
+        $select = $this->bdd->prepare($requete);
+
+        // exécution de la requête avec liaison des paramètres
+        $select->execute(array(':id' => $this->id));
+
+        // récupération du tableau
+        $fetch_assoc = $select->fetch(PDO::FETCH_ASSOC);
+
+        // fermer la connexion
+        $this->bdd = null;
+
+        return $fetch_assoc;
     }
 }

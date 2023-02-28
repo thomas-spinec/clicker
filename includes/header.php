@@ -24,7 +24,6 @@ $user = new User();
             ?>
                 <div id='center'>
                     <h3>Bonjour <?= $login ?></h3>
-                    <a href='index.php?deconnexion=true'><button>Déconnexion</button></a>
                 </div>
             <?php
             } else {

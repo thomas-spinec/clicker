@@ -32,7 +32,10 @@
     <!-- Main -->
     <main>
         <section class="centrage">
+            <button id="deco">Déconnexion</button>
             <section id="score">
+                <!-- partie multiplicateur -->
+                <p>Multiplicateur : &times;<span id="scoreMultiplier">1</span></p>
                 <p>Fragments : <span id="scoreValue">0</span></p>
                 <p>Mineurs: <span id="scoreIdle">0</span>/s</p>
             </section>
@@ -40,6 +43,14 @@
                 <button id="clickerButton"><img src="img/asteroid.png" alt=""></button>
             </section>
             <section id="shop">
+                <!-- section multiplicateur -->
+                <section class="shopItem">
+                    <h3 class="name">Multiplicateur</h3>
+                    <p>Coût : <span class="cost">10</span></p>
+                    <p>Gain : &times;<span class="gain">2</span></p>
+                    <button class="buyMultiplier">Acheter</button>
+                </section>
+                <!-- section mineur -->
                 <section class="shopItem">
                     <h3 class="name">Mineur (pioche)</h3>
                     <p>Coût : <span class="cost">10</span></p>
@@ -77,6 +88,7 @@
                     <button class="buy">Acheter</button>
                 </section>
             </section>
+            <button id="reset">reset</button>
         </section>
     </main>
     <!-- /Main -->
