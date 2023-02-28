@@ -250,4 +250,22 @@ class User
 
         return $fetch_assoc;
     }
+
+    // reset 
+    public function reset()
+    {
+        // requête
+        $requete = "UPDATE comptes SET score = null, idle = null, multiplier = null, shop = null WHERE id_utilisateur = :id";
+
+        // préparation de la requête
+        $update = $this->bdd->prepare($requete);
+
+        // exécution de la requête avec liaison des paramètres
+        $update->execute(array(':id' => $this->id));
+
+        // fermer la connexion
+        $this->bdd = null;
+
+        echo "ok"; // reset réussi
+    }
 }

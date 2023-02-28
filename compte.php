@@ -23,3 +23,8 @@ if (isset($_GET['col'])) {
     $game = $user->load();
     echo json_encode($game);
 }
+
+// bouton reset
+if (isset($_GET['reset'])) {
+    $user->reset();
+}

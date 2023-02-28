@@ -162,6 +162,7 @@ window.addEventListener("DOMContentLoaded", function () {
     localStorage.clear();
     score.innerHTML = 0;
     idle.innerHTML = 0;
+    multiplicateur.innerHTML = 1;
   }
 
   // Fonction de sauvegarde du score dans la bdd lorsque le bouton de déconexion est cliqué
@@ -280,9 +281,21 @@ window.addEventListener("DOMContentLoaded", function () {
 
   // click sur le bouton reset
   btnReset.addEventListener("click", function (e) {
-    resetScore();
-    // rechargement de page pour la boutique
-    location.reload();
+    // fetch vers compte.php en get
+    fetch("compte.php?reset=ok")
+      .then((response) => response.text())
+      .then((result) => {
+        // trim
+        result = result.trim();
+        if (result == "ok") {
+          resetScore();
+          // rechargement de page pour la boutique
+          location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   });
 
   // click sur le bouton de déconnexion
